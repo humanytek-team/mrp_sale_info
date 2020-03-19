@@ -22,7 +22,7 @@ class MrpProduction(models.Model):
         if not values.get('procurement_group_id'):
             procurement_old = self.env['procurement.group'].search([('sale_id.name', '=', values['origin'])], limit=1, order='id ASC')
             values['procurement_group_id'] = self.env["procurement.group"].create({
-                'name': values['name'],
+                'name': values.get('name', 'PG'),
                 'sale_id': procurement_old and procurement_old.sale_id.id,
             }).id
         production = super(MrpProduction, self).create(values)
